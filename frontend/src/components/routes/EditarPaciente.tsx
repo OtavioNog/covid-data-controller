@@ -6,13 +6,14 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Carousel, Container } from 'react-bootstrap';
 
-import InputMask from 'react-input-mask';
 import { useState } from 'react';
 
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 
+import CpfValidado from '../misc/CpfValidado';
+import MaskTelefone from '../misc/MaskTelefone';
 
 function EditarPaciente() {
 
@@ -39,12 +40,12 @@ function EditarPaciente() {
 
             <Form.Group className="mb-3">
               <Form.Label>CPF</Form.Label>
-              <InputMask type="text" mask="999.999.999-99" placeholder="000.000.000-00" className='form-control' />
+              <CpfValidado value="" disabled={false} validacao={true}  />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Telefone</Form.Label>
-              <InputMask type="text" mask="(99) 99999-9999" placeholder="(00) 00000-0000" className='form-control' />
+              <MaskTelefone value="" disabled={false} />
 
             </Form.Group>
 
