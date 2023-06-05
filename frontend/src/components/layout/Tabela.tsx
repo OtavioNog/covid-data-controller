@@ -8,12 +8,17 @@ import { Link } from 'react-router-dom'
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 
 function Tabela() {
 
     const [pacientes, setPacientes] = useState([]);
+    const { id } = useParams();
 
+
+    // Buscar dados do BD
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -27,8 +32,36 @@ function Tabela() {
         fetchData();
     }, []);
 
+
+    // Buscar pelo ID
+
+    useEffect(() => {
+        const findPaciente = async () => {
+          if (id) {
+            try {
+              const response = await axios.get(`http://localhost:8000/api/pacientes/${id}`);
+              setPacientes(response.data);
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        };
+      
+        findPaciente();
+      }, [id]);
+
+    // Definir Idade
+
+function definirIdade() {
+    // WIP - adicionar em: Tabela, Info, Editar e Diagnóstico
+    console.log("Em progresso...")
+}
+
+
 function deletarPaciente() {
-    console.log("VAMOOOOOOO")
+    // WIP
+    console.log("Em progresso...")
+    definirIdade()
 }
 
     return (
@@ -66,10 +99,10 @@ function deletarPaciente() {
                             )}
 
                             <td className='actions'>
-                                <Link to="/info"><FaEye /></Link>
-                                <Link to="/edit"><FaPen /></Link>
+                                <Link to={`/info/${paciente.id}`}><FaEye /></Link>
+                                <Link to={`/edit/${paciente.id}`}><FaPen /></Link>
                                 <Link to="#"><FaTrashAlt onClick={deletarPaciente} /></Link>
-                                <Link to="/diagnostic"><FaArrowRight /></Link>
+                                <Link to={`/diagnostic/${paciente.id}`}><FaArrowRight /></Link>
                             </td>
                         </tr>
                     ))}
