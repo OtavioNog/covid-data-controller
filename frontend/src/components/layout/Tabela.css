@@ -1,0 +1,32 @@
+.tabelaMain {
+    box-shadow: 10px 5px 8px rgb(214, 214, 214);
+}
+
+.actions svg {
+    display: inline;
+    color: #222;
+    font-size: 1.25em;  
+    cursor: pointer;  
+    transition: .5s;
+    margin: 0 5px;
+}
+
+.tableIndice {
+   font: 800;
+}
+
+.icons svg {
+    gap: 30px;
+    transition: .5s;
+}
+
+.actions svg:hover {   
+    transform: scale(130%);
+}
+
+.alertTable {
+  display: flex;
+  text-align: center;
+  font-size: 16px;
+
+}

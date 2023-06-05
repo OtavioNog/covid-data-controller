@@ -1,0 +1,8 @@
+h1.h1Home span {
+    background-color: #383838;
+    color: #a4a4a4;
+    text-decoration: none;
+    font-weight: bolder;
+    padding: 5px;
+    border-radius: 5px;
+}

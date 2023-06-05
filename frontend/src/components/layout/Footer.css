@@ -1,0 +1,50 @@
+.containerFooter {
+    bottom: 0;
+}
+
+.footer {
+    background-color: #222;
+    color: #FFF;
+    padding: 3em;
+    text-align: center;
+}
+
+ul {
+    padding-left: 0;
+}
+
+.social_list {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+}
+
+.social_list a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.social_list li {
+    margin: 0 1em;
+    transition: .8s;
+}
+
+.social_list li:hover {
+    color: #a8ebdf;
+    transform: scale(140%);
+    transform: translateY(-5px);
+}
+
+.social_list svg {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.copyright {
+    margin-top: 2em;
+}
+
+.copyright span {
+    font-weight: bold;
+    color: #a8ebdf;
+}

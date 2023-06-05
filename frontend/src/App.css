@@ -1,0 +1,23 @@
+div#root{
+  background-color: #fbfbfb;
+}
+
+.divMain {
+  max-width: 1700px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  margin-top: 50px;
+  height: 100vh;
+}
+
+ul {
+  padding-left: 0 !important;
+}
+
+.divMain h1 {
+  text-align: center;
+}
+
+.fixo {
+  margin-bottom: 30px;
+}

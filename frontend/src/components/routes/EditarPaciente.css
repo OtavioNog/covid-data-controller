@@ -1,0 +1,26 @@
+h1 span {
+    text-decoration: underline;
+}
+
+h3 {
+    text-align: center;
+}
+
+.custom-carousel {
+  height: 500px;
+}
+
+.custom-carousel .carousel-control-prev-icon,
+.custom-carousel .carousel-control-next-icon {
+  filter: invert(100%);
+}
+
+.custom-carousel .carousel-control-prev,
+.custom-carousel .carousel-control-next {
+  color: black;
+  margin: 0 -120px;
+}
+
+.custom-carousel .carousel-item {
+  transition: ease .1s;
+}

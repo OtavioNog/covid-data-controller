@@ -1,0 +1,10 @@
+.diagnosticoDadosSaude, .diagnosticoSintomas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.form-control {
+    font-size: 18px;
+}
