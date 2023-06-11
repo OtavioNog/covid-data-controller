@@ -1,7 +1,7 @@
 # 📌 Controle de casos de covid
 
-![GitHub repo size](https://img.shields.io/github/repo-size/OtavioNog/README-template?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/OtavioNog/README-template?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/OtavioNog/covid-data-controller?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/OtavioNog/covid-data-controller?style=for-the-badge)
 
 <img src="frontend/public/Hospital.gif" alt="gif">
 
