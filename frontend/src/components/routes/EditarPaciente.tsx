@@ -1,22 +1,13 @@
-import './EditarPaciente.css';
-
-import 'bootstrap/dist/css/bootstrap.css';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Alert from 'react-bootstrap/Alert';
-import { Carousel, Container } from 'react-bootstrap';
-
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
-import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-
+import { IMaskInput } from 'react-imask';
+import { FaArrowLeft } from 'react-icons/fa';
+import { Card, Button, Form, Alert, Carousel, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
-
-import CpfValidado from '../misc/CpfValidado';
-import MaskTelefone from '../misc/MaskTelefone';
+import './EditarPaciente.css';
+import { format, parseISO } from 'date-fns';
 
 interface pacienteData {
   id: number;
@@ -26,8 +17,8 @@ interface pacienteData {
   telefone: string;
   nascimento: string;
   perfil: string;
+  created_at: string;
 }
-
 
 function EditarPaciente() {
 
@@ -38,6 +29,25 @@ function EditarPaciente() {
   const handleSelect = (selectedIndex: number) => {
     setActiveIndex(selectedIndex);
   };
+
+  // Idade em anos
+
+  function idadeAnos(nascimento: string): number {
+    const dataAtual = new Date();
+    const anoNascimento = new Date(nascimento);
+
+    let idade = dataAtual.getFullYear() - anoNascimento.getFullYear();
+    const diferencaMeses = dataAtual.getMonth() - anoNascimento.getMonth();
+
+    if (
+      diferencaMeses < 0 ||
+      (diferencaMeses === 0 && dataAtual.getDate() < anoNascimento.getDate())
+    ) {
+      idade--;
+    }
+
+    return idade;
+  }
 
   useEffect(() => {
 
@@ -58,33 +68,46 @@ function EditarPaciente() {
     )
   }
 
-
-
   const renderForms = () => {
     if (activeIndex === 0) {
       return (
         <div>
-          <h3>Atualizar dados:</h3>
+          <h3>Atualizar dados: ~Em desenvolvimento!~</h3>
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Nome completo</Form.Label>
-              <Form.Control type="text" placeholder={paciente.nome} />
+              <Form.Control type="text" placeholder={paciente.nome} readOnly />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Data de nascimento</Form.Label>
-              <Form.Control type="date" value={paciente.nascimento} />
+              <Form.Control type="date" value={paciente.nascimento} readOnly />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>CPF</Form.Label>
-              <CpfValidado value={paciente.cpf} disabled={false} validacao={true} />
+              <Form.Control
+                as={IMaskInput}
+                type="text"
+                name="cpf"
+                value={paciente.cpf}
+                required
+                mask="000.000.000-00"
+                readOnly
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Telefone</Form.Label>
-              <MaskTelefone value={paciente.telefone} disabled={false} />
-
+              <Form.Control
+                as={IMaskInput}
+                type="text"
+                name="telefone"
+                value={paciente.telefone}
+                required
+                mask="(00) 00000-0000"
+                readOnly
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -99,33 +122,107 @@ function EditarPaciente() {
         </div>
       );
     } else if (activeIndex === 1) {
-      return (
-        <div>
-          <h3>Atualizar sintomas:</h3>
-          <Form id='formSintomas'>
-            <Form.Check type="switch" id="febre" label="Febre" />
-            <Form.Check type="switch" id="coriza" label="Coriza" />
-            <Form.Check type="switch" id="narizentupido" label="Nariz Entupido" />
-            <Form.Check type="switch" id="cansaco" label="Cansaço" />
-            <Form.Check type="switch" id="tosse" label="Tosse" />
-            <Form.Check type="switch" id="dorcabeca" label="Dor de cabeça" />
-            <Form.Check type="switch" id="dorcorpo" label="Dores no corpo" />
-            <Form.Check type="switch" id="malestar" label="Mal estar geral" />
-            <Form.Check type="switch" id="dorgarganta" label="Dor de garganta" />
-            <Form.Check type="switch" id="dificuldaderespirar" label="Dificuldade para respirar" />
-            <Form.Check type="switch" id="faltapaladar" label="Falta de paladar" />
-            <Form.Check type="switch" id="faltaolfato" label="Falta de olfato" />
-            <Form.Check type="switch" id="dificuldadelocomocao" label="Dificuldade de locomoção" />
-            <Form.Check type="switch" id="diarreia" label="Diarréia" />
-          </Form>
-        </div>
-      );
+      if (paciente.status === "semdiagnostico") {
+
+        return (
+          <div>
+            <h3>Atualizar sintomas:</h3>
+            <Alert variant="warning">
+              Não é possível realizar estas alterações sem estar diagnosticado, faça um diagnóstico antes!
+            </Alert>
+          </div>
+        );
+
+      } else {
+
+        return (
+          <div>
+            <h3>Atualizar sintomas:</h3>
+
+            <Form id='formSintomas'>
+              <Form.Check
+                type="switch"
+                id="febre"
+                label="Febre"
+              />
+              <Form.Check
+                type="switch"
+                id="coriza"
+                label="Coriza"
+              />
+              <Form.Check
+                type="switch"
+                id="narizentupido"
+                label="Nariz Entupido"
+              />
+              <Form.Check
+                type="switch"
+                id="cansaco"
+                label="Cansaço"
+              />
+              <Form.Check
+                type="switch"
+                id="tosse"
+                label="Tosse"
+              />
+              <Form.Check
+                type="switch"
+                id="dorcabeca"
+                label="Dor de cabeça"
+              />
+              <Form.Check
+                type="switch"
+                id="dorcorpo"
+                label="Dores no corpo"
+              />
+              <Form.Check
+                type="switch"
+                id="malestar"
+                label="Mal estar geral"
+              />
+              <Form.Check
+                type="switch"
+                id="dorgarganta"
+                label="Dor de garganta"
+              />
+              <Form.Check
+                type="switch"
+                id="dificuldaderespirar"
+                label="Dificuldade para respirar"
+              />
+              <Form.Check
+                type="switch"
+                id="faltapaladar"
+                label="Falta de paladar"
+              />
+              <Form.Check
+                type="switch"
+                id="faltaolfato"
+                label="Falta de olfato"
+              />
+              <Form.Check
+                type="switch"
+                id="dificuldadelocomocao"
+                label="Dificuldade de locomoção"
+              />
+              <Form.Check
+                type="switch"
+                id="diarreia"
+                label="Diarréia"
+              />
+              <Form.Text className="text-muted">
+                Se deseja finalizar as alterações, pressione o botão na outra parte de edição.
+              </Form.Text>
+            </Form>
+          </div>
+        );
+      }
     }
   };
 
   return (
     <div>
-      <h1 className='h1Home'><span>Editar</span> informações de "{paciente.nome}"</h1>
+      <h1 className='h1Home'><span>Editar</span> informações de {paciente.nome}</h1>
       <hr />
       <br></br>
 
@@ -134,16 +231,42 @@ function EditarPaciente() {
           <h3>Pré-Visualização</h3>
           <div className="divInfo">
             <Card style={{ width: '20rem' }}>
-              <Card.Img variant="top" src="../../public/sxzj.jpeg" />
+              <Card.Img
+                variant="top"
+                src={`http://localhost:8000/api/${paciente.perfil}`}
+                className={`status-${paciente.status}`}
+              />
               <Card.Body>
                 <Card.Title>{paciente.nome}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">Criado em 03/06/2023 às 10:06:27</Card.Subtitle><br></br>
+                <Card.Subtitle className="mb-2 text-muted">Criado em: {format(new Date(paciente.created_at), 'dd/MM/yyyy HH:mm:ss')}</Card.Subtitle><br></br>
 
                 <div className="card-text">
-                  <p>Idade: 17 anos</p>
-                  <p>Data de nascimento: {paciente.nascimento}</p>
+                  <p>Nasceu em: {format(parseISO(paciente.nascimento), 'dd/MM/yyyy')}</p>
+                  <p>Idade: {idadeAnos(paciente.nascimento)} anos</p>
                   <p>CPF: {paciente.cpf}</p>
                   <p>Telefone: {paciente.telefone}</p>
+                  <div className="card-text">
+
+                    {paciente.status === "semdiagnostico" ? (
+                      <Alert className='alertCenter' variant="info">
+                        <p>Sem diagnostico</p>
+                      </Alert>
+                    ) : paciente.status === "sintomas_insuficientes" ? (
+                      <Alert className='alertCenter' variant="success">
+                        <p>Sintomas insuficientes</p>
+                      </Alert>
+                    ) : paciente.status === "potencial_infectado" ? (
+                      <Alert className='alertCenter' variant="warning">
+                        <p>Potencial infectado</p>
+                      </Alert>
+                    ) : paciente.status === "possivel_infectado" ? (
+                      <Alert className='alertCenter' variant="danger">
+                        <p>Possível infectado</p>
+                      </Alert>
+                    ) : (
+                      <p className='alertTable'><Alert variant="secondary">Dados indisponíveis</Alert></p>
+                    )}
+                  </div>
                 </div>
 
               </Card.Body>

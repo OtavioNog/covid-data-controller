@@ -6,6 +6,23 @@
 .divInfo img {
     scale: 85%;
     border-radius: 100%;
+    border: 12px solid #b7b7b7;
+}
+
+.divInfo img.status-semdiagnostico {
+    border: 12px solid #cff4fc;
+}
+
+.divInfo img.status-sintomas_insuficientes {
+    border: 12px solid #d1e7dd;
+}
+
+.divInfo img.status-potencial_infectado {
+    border: 12px solid #fff3cd;
+}
+
+.divInfo img.status-possivel_infectado {
+    border: 12px solid #f8d7da;
 }
 
 .btnVoltar {
@@ -18,14 +35,14 @@
     border-radius: 100%;
 }
 
-.btnVoltar svg{
+.btnVoltar svg {
     color: #222;
     font-size: 2em;
     transition: .5s;
     border-radius: 100%;
 }
 
-.btnVoltar svg:hover{
+.btnVoltar svg:hover {
     cursor: pointer;
     transform: scale(115%);
 }

@@ -11,4 +11,5 @@ class Paciente extends Model
     
     protected $table = 'pacientes';
     protected $fillable = ['status', 'nome', 'cpf' ,'telefone', 'nascimento', 'perfil'];
+    public $timestamps = true;
 }

@@ -24,3 +24,7 @@ h3 {
 .custom-carousel .carousel-item {
   transition: ease .1s;
 }
+
+.carousel-indicators {
+    display: none;
+}
