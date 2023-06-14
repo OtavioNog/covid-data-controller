@@ -33,7 +33,7 @@ Para instalar, siga as etapas abaixo.
 git clone https://github.com/OtavioNog/covid-data-controller
 ```
 
-2º passo: Acesse o diretório da API Laravel:
+2º passo: Após acessar o diretório raiz, entre no diretório da API Laravel:
 ```
 cd ./covid-data-analyzer
 ```
