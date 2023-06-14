@@ -77,7 +77,7 @@ npm run dev
 
 PS: Caso ocorra algum erro na instalação das dependências do React, por favor tente o código abaixo:
 ```
-npm run dev --force
+npm install --force
 ```
 
 Pedro Otavio | since `2021`
